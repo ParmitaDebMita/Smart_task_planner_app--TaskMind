@@ -1,0 +1,61 @@
+// Stitch TaskMind Color Tokens
+export const colors = {
+  primary: '#3525CD',
+  primaryContainer: '#4F46E5',
+  onPrimary: '#FFFFFF',
+  onPrimaryContainer: '#DAD7FF',
+  primaryFixed: '#E2DFFF',
+  primaryFixedDim: '#C3C0FF',
+  onPrimaryFixed: '#0F0069',
+  onPrimaryFixedVariant: '#3323CC',
+
+  secondary: '#6B38D4',
+  secondaryContainer: '#8455EF',
+  onSecondary: '#FFFFFF',
+  onSecondaryContainer: '#FFFBFF',
+  secondaryFixed: '#E9DDFF',
+  secondaryFixedDim: '#D0BCFF',
+  onSecondaryFixed: '#23005C',
+  onSecondaryFixedVariant: '#5516BE',
+
+  tertiary: '#005523',
+  tertiaryContainer: '#007030',
+  onTertiary: '#FFFFFF',
+  onTertiaryContainer: '#63F889',
+  tertiaryFixed: '#6BFF8F',
+  tertiaryFixedDim: '#4AE176',
+  onTertiaryFixed: '#002109',
+  onTertiaryFixedVariant: '#005321',
+
+  success: '#22C55E',
+  warning: '#F59E0B',
+  error: '#BA1A1A',
+  errorCoral: '#EF4444',
+  errorContainer: '#FFDAD6',
+  onError: '#FFFFFF',
+  onErrorContainer: '#93000A',
+
+  background: '#F9F9FF',
+  surface: '#F9F9FF',
+  surfaceDim: '#D1DAF4',
+  surfaceBright: '#F9F9FF',
+  surfaceContainerLowest: '#FFFFFF',
+  surfaceContainerLow: '#F1F3FF',
+  surfaceContainer: '#E9EDFF',
+  surfaceContainerHigh: '#E1E8FF',
+  surfaceContainerHighest: '#D9E2FC',
+  surfaceVariant: '#D9E2FC',
+  surfaceTint: '#4D44E3',
+
+  onSurface: '#121B2E',
+  onSurfaceVariant: '#464555',
+  inverseSurface: '#273044',
+  inverseOnSurface: '#EDF0FF',
+  inversePrimary: '#C3C0FF',
+
+  outline: '#777587',
+  outlineVariant: '#C7C4D8',
+  border: '#E5E7EB',
+};
+
+export default colors;
