@@ -1,102 +1,141 @@
 import React, { useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import colors from '../../theme/colors';
 import typography from '../../theme/typography';
 import { spacing, rounded } from '../../theme/spacing';
 import { useTaskContext } from '../../context/TaskContext';
-import AppLogo from '../../components/common/AppLogo';
-import Icon from '../../components/common/Icon';
+import TaskMindMascot from '../../components/common/TaskMindMascot';
 
 export const SplashScreen = () => {
   const { navigateTo } = useTaskContext();
 
   return (
-    <View style={styles.container}>
-      <View style={styles.logoWrapper}>
-        <AppLogo size={88} />
+    <TouchableOpacity
+      style={styles.container}
+      activeOpacity={0.95}
+      onPress={() => navigateTo('Onboarding')}
+    >
+      {/* Soft Decorative Ambient Pastel Blobs */}
+      <View style={styles.blobTopLeft} />
+      <View style={styles.blobTopRight} />
+      <View style={styles.blobBottomRight} />
+
+      {/* Brand Header */}
+      <View style={styles.brandWrapper}>
         <Text style={styles.brandTitle}>TaskMind</Text>
-        <Text style={styles.brandTagline}>AI Academic Planner & Study Companion</Text>
+        <Text style={styles.brandSubtitle}>Plan • Focus • Grow</Text>
       </View>
 
+      {/* Mascot Illustration Hero */}
+      <View style={styles.mascotWrapper}>
+        <TaskMindMascot size={210} showBackground={true} variant="studying" />
+      </View>
+
+      {/* Tap Hint */}
       <View style={styles.footerSection}>
         <TouchableOpacity
-          style={styles.primaryBtn}
-          onPress={() => navigateTo('onboarding')}
-          activeOpacity={0.85}
+          style={styles.continueBtn}
+          onPress={() => navigateTo('Onboarding')}
+          activeOpacity={0.88}
         >
-          <Text style={styles.primaryBtnText}>Get Started</Text>
-          <Icon name="arrow_forward" size={18} color={colors.onPrimary} />
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.secondaryBtn}
-          onPress={() => navigateTo('home')}
-          activeOpacity={0.8}
-        >
-          <Text style={styles.secondaryBtnText}>Enter Demo Dashboard</Text>
+          <Text style={styles.continueBtnText}>Get Started →</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.primaryContainer,
+    backgroundColor: '#FFFDF9',
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingVertical: spacing.xxl,
     paddingHorizontal: spacing.lg,
+    overflow: 'hidden',
   },
-  logoWrapper: {
-    flex: 1,
+  blobTopLeft: {
+    position: 'absolute',
+    top: -40,
+    left: -40,
+    width: 140,
+    height: 140,
+    borderRadius: 70,
+    backgroundColor: '#FED7AA',
+    opacity: 0.6,
+  },
+  blobTopRight: {
+    position: 'absolute',
+    top: -20,
+    right: -30,
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    backgroundColor: '#A7F3D0',
+    opacity: 0.5,
+  },
+  blobBottomRight: {
+    position: 'absolute',
+    bottom: -30,
+    right: -20,
+    width: 130,
+    height: 130,
+    borderRadius: 65,
+    backgroundColor: '#BAE6FD',
+    opacity: 0.5,
+  },
+  brandWrapper: {
     alignItems: 'center',
-    justifyContent: 'center',
-    gap: spacing.sm,
+    marginTop: spacing.xl,
+    zIndex: 2,
   },
   brandTitle: {
     ...typography.headlineXl,
-    color: colors.onPrimary,
-    fontSize: 36,
-    lineHeight: 42,
+    color: colors.primaryCoral,
+    fontSize: 42,
+    lineHeight: 48,
     fontWeight: '800',
-    marginTop: spacing.md,
+    letterSpacing: -0.5,
   },
-  brandTagline: {
+  brandSubtitle: {
     ...typography.bodyMd,
-    color: colors.onPrimaryContainer,
-    textAlign: 'center',
-    maxWidth: 260,
+    color: '#64748B',
+    fontWeight: '600',
+    marginTop: 6,
+    letterSpacing: 0.5,
+  },
+  mascotWrapper: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 2,
   },
   footerSection: {
     width: '100%',
-    maxWidth: 360,
-    gap: spacing.sm,
+    maxWidth: 320,
+    alignItems: 'center',
+    zIndex: 2,
+    marginBottom: spacing.md,
   },
-  primaryBtn: {
-    height: 48,
-    backgroundColor: colors.surfaceContainerLowest,
-    borderRadius: rounded.xl,
-    flexDirection: 'row',
+  continueBtn: {
+    width: '100%',
+    height: 52,
+    backgroundColor: colors.primaryCoral,
+    borderRadius: rounded.full,
     alignItems: 'center',
     justifyContent: 'center',
-    gap: spacing.xs,
+    shadowColor: colors.primaryCoral,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 10,
+    elevation: 4,
   },
-  primaryBtnText: {
+  continueBtnText: {
     ...typography.labelLg,
-    color: colors.primaryContainer,
+    color: '#FFFFFF',
+    fontSize: 16,
     fontWeight: '700',
-  },
-  secondaryBtn: {
-    height: 44,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  secondaryBtnText: {
-    ...typography.labelMd,
-    color: colors.onPrimaryContainer,
-    textDecorationLine: 'underline',
   },
 });
 

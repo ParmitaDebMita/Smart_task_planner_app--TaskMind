@@ -10,6 +10,7 @@ import { useTaskContext } from '../../context/TaskContext';
 import Icon from '../../components/common/Icon';
 import Header from '../../components/common/Header';
 import BottomNav from '../../components/common/BottomNav';
+import TaskMindMascot from '../../components/common/TaskMindMascot';
 import { colors } from '../../theme/colors';
 import { typography } from '../../theme/typography';
 import { spacing, borderRadius, elevation } from '../../theme/spacing';
@@ -33,27 +34,132 @@ export default function ProfileScreen() {
 
   return (
     <View style={styles.container}>
-      <Header
-        title="Student Profile"
-        subtitle="Academic performance & degree audit"
-        showBack={true}
-        onBack={() => navigateTo('home')}
-      />
+      {/* Top Header matching Screen 10 */}
+      <View style={styles.topHeader}>
+        <TouchableOpacity onPress={() => navigateTo('HomeDashboard')} style={styles.backBtn}>
+          <Icon name="arrow_back" size={22} color="#0F172A" />
+        </TouchableOpacity>
+        <Text style={styles.topHeaderTitle}>Profile</Text>
+        <TouchableOpacity onPress={() => navigateTo('Settings')} style={styles.backBtn}>
+          <Icon name="more_vert" size={22} color="#0F172A" />
+        </TouchableOpacity>
+      </View>
 
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
-        {/* Profile Card Hero */}
-        <View style={styles.profileCard}>
-          <View style={styles.profileHeader}>
-            <View style={styles.avatarLarge}>
-              <Text style={styles.avatarLargeText}>AR</Text>
-            </View>
-            <View style={styles.profileInfo}>
-              <Text style={styles.profileName}>Alex Rivera</Text>
-              <Text style={styles.profileMajor}>B.S. Computer Science • Junior Year</Text>
-              <Text style={styles.profileUniversity}>Stanford University (School of Engineering)</Text>
-            </View>
+        {/* Profile Card Hero matching Screen 10 */}
+        <View style={styles.profileHeroCard}>
+          <View style={styles.avatarMascotCircle}>
+            <TaskMindMascot size={52} variant="happy" showBackground={false} />
           </View>
+          <View style={styles.profileHeroInfo}>
+            <Text style={styles.profileHeroName}>Alex</Text>
+            <Text style={styles.profileHeroSubtitle}>Student • Grade 11</Text>
+          </View>
+          <TouchableOpacity onPress={() => showToast('Edit Profile', 'info')} style={styles.editIconBtn}>
+            <Icon name="edit" size={18} color="#94A3B8" />
+          </TouchableOpacity>
+        </View>
 
+        {/* Batch 5 Profile Preference Rows matching Screen 10 */}
+        <View style={styles.preferencesListCard}>
+          {/* 1. Goals */}
+          <TouchableOpacity style={styles.prefRow} onPress={() => navigateTo('Goals')}>
+            <View style={[styles.prefIconBox, { backgroundColor: '#EDE9FE' }]}>
+              <Icon name="flag" size={18} color="#8B5CF6" />
+            </View>
+            <View style={styles.prefTextCol}>
+              <Text style={styles.prefTitle}>Goals</Text>
+              <Text style={styles.prefSubtitle}>Score 90% in Exams</Text>
+            </View>
+            <Icon name="chevron_right" size={20} color="#CBD5E1" />
+          </TouchableOpacity>
+
+          {/* 2. Study Time */}
+          <TouchableOpacity style={styles.prefRow} onPress={() => navigateTo('ProductivityAnalytics')}>
+            <View style={[styles.prefIconBox, { backgroundColor: '#EFF6FF' }]}>
+              <Icon name="timer" size={18} color="#3B82F6" />
+            </View>
+            <View style={styles.prefTextCol}>
+              <Text style={styles.prefTitle}>Study Time</Text>
+              <Text style={styles.prefSubtitle}>14h/week</Text>
+            </View>
+            <Icon name="chevron_right" size={20} color="#CBD5E1" />
+          </TouchableOpacity>
+
+          {/* 3. Language */}
+          <TouchableOpacity style={styles.prefRow} onPress={() => showToast('Language: English (US)', 'info')}>
+            <View style={[styles.prefIconBox, { backgroundColor: '#ECFDF5' }]}>
+              <Icon name="language" size={18} color="#10B981" />
+            </View>
+            <View style={styles.prefTextCol}>
+              <Text style={styles.prefTitle}>Language</Text>
+              <Text style={styles.prefSubtitle}>English (US)</Text>
+            </View>
+            <Icon name="chevron_right" size={20} color="#CBD5E1" />
+          </TouchableOpacity>
+
+          {/* 4. Text Size */}
+          <TouchableOpacity style={styles.prefRow} onPress={() => navigateTo('Personalization')}>
+            <View style={[styles.prefIconBox, { backgroundColor: '#FEF3C7' }]}>
+              <Icon name="text_fields" size={18} color="#F59E0B" />
+            </View>
+            <View style={styles.prefTextCol}>
+              <Text style={styles.prefTitle}>Text Size</Text>
+              <Text style={styles.prefSubtitle}>Medium</Text>
+            </View>
+            <Icon name="chevron_right" size={20} color="#CBD5E1" />
+          </TouchableOpacity>
+
+          {/* 5. Accessibility */}
+          <TouchableOpacity style={styles.prefRow} onPress={() => navigateTo('Settings')}>
+            <View style={[styles.prefIconBox, { backgroundColor: '#F1F5F9' }]}>
+              <Icon name="accessibility" size={18} color="#64748B" />
+            </View>
+            <View style={styles.prefTextCol}>
+              <Text style={styles.prefTitle}>Accessibility</Text>
+              <Text style={styles.prefSubtitle}>High Contrast</Text>
+            </View>
+            <Icon name="chevron_right" size={20} color="#CBD5E1" />
+          </TouchableOpacity>
+
+          {/* 6. Motivation */}
+          <TouchableOpacity style={styles.prefRow} onPress={() => navigateTo('Personalization')}>
+            <View style={[styles.prefIconBox, { backgroundColor: '#FFEFEB' }]}>
+              <Icon name="volunteer_activism" size={18} color="#FF5B37" />
+            </View>
+            <View style={styles.prefTextCol}>
+              <Text style={styles.prefTitle}>Motivation</Text>
+              <Text style={styles.prefSubtitle}>Encouraging</Text>
+            </View>
+            <Icon name="chevron_right" size={20} color="#CBD5E1" />
+          </TouchableOpacity>
+
+          {/* 7. AI Personality */}
+          <TouchableOpacity style={styles.prefRow} onPress={() => navigateTo('Personalization')}>
+            <View style={[styles.prefIconBox, { backgroundColor: '#EDE9FE' }]}>
+              <Icon name="smart_toy" size={18} color="#8B5CF6" />
+            </View>
+            <View style={styles.prefTextCol}>
+              <Text style={styles.prefTitle}>AI Personality</Text>
+              <Text style={styles.prefSubtitle}>Caring</Text>
+            </View>
+            <Icon name="chevron_right" size={20} color="#CBD5E1" />
+          </TouchableOpacity>
+
+          {/* 8. Data Permissions */}
+          <TouchableOpacity style={[styles.prefRow, { borderBottomWidth: 0 }]} onPress={() => navigateTo('Settings')}>
+            <View style={[styles.prefIconBox, { backgroundColor: '#FEE2E2' }]}>
+              <Icon name="lock" size={18} color="#EF4444" />
+            </View>
+            <View style={styles.prefTextCol}>
+              <Text style={styles.prefTitle}>Data Permissions</Text>
+              <Text style={styles.prefSubtitle}>Manage your data</Text>
+            </View>
+            <Icon name="chevron_right" size={20} color="#CBD5E1" />
+          </TouchableOpacity>
+        </View>
+        {/* Academic Degree & GPA Card */}
+        <View style={styles.profileCard}>
           <View style={styles.gpaBadgeRow}>
             <View style={styles.gpaPill}>
               <Icon name="school" size={14} color="#4F46E5" />
@@ -138,10 +244,30 @@ export default function ProfileScreen() {
           ))}
         </View>
 
+        {/* Personalization Shortcut */}
+        <TouchableOpacity
+          style={styles.settingsBtn}
+          onPress={() => navigateTo('Personalization')}
+        >
+          <Icon name="palette" size={20} color="#8B5CF6" />
+          <Text style={styles.settingsBtnText}>Personalization</Text>
+          <Icon name="chevron_right" size={20} color="#94A3B8" />
+        </TouchableOpacity>
+
+        {/* Mascot Selection Shortcut */}
+        <TouchableOpacity
+          style={styles.settingsBtn}
+          onPress={() => navigateTo('MascotSelection')}
+        >
+          <Icon name="pets" size={20} color="#FF5B37" />
+          <Text style={styles.settingsBtnText}>Choose Your Mascot</Text>
+          <Icon name="chevron_right" size={20} color="#94A3B8" />
+        </TouchableOpacity>
+
         {/* Account Settings Shortcut */}
         <TouchableOpacity
           style={styles.settingsBtn}
-          onPress={() => navigateTo('settings')}
+          onPress={() => navigateTo('Settings')}
         >
           <Icon name="settings" size={20} color="#4F46E5" />
           <Text style={styles.settingsBtnText}>Account & App Preferences</Text>
@@ -157,14 +283,118 @@ export default function ProfileScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F8FAFC',
+    backgroundColor: '#FFFDF9',
+  },
+  topHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: spacing.md,
+    paddingTop: spacing.sm,
+    paddingBottom: spacing.xs,
+    backgroundColor: '#FFFFFF',
+    borderBottomWidth: 1,
+    borderBottomColor: '#F1F5F9',
+  },
+  backBtn: {
+    padding: 6,
+    width: 36,
+  },
+  topHeaderTitle: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#0F172A',
   },
   content: {
     flex: 1,
   },
   scrollContent: {
     padding: spacing.md,
-    paddingBottom: 100,
+    paddingBottom: 110,
+    gap: 14,
+  },
+  profileHeroCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#FFFFFF',
+    borderRadius: borderRadius.xl,
+    padding: spacing.md,
+    borderWidth: 1,
+    borderColor: '#F1F5F9',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.04,
+    shadowRadius: 8,
+    elevation: 2,
+  },
+  avatarMascotCircle: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: '#FFF5F3',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 14,
+  },
+  profileHeroInfo: {
+    flex: 1,
+  },
+  profileHeroName: {
+    fontSize: 18,
+    fontWeight: '800',
+    color: '#0F172A',
+  },
+  profileHeroSubtitle: {
+    fontSize: 13,
+    color: '#64748B',
+    marginTop: 2,
+    fontWeight: '500',
+  },
+  editIconBtn: {
+    padding: 8,
+    borderRadius: 20,
+    backgroundColor: '#F8FAFC',
+  },
+  preferencesListCard: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: borderRadius.xl,
+    borderWidth: 1,
+    borderColor: '#F1F5F9',
+    overflow: 'hidden',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.04,
+    shadowRadius: 8,
+    elevation: 2,
+  },
+  prefRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 13,
+    paddingHorizontal: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#F8FAFC',
+  },
+  prefIconBox: {
+    width: 38,
+    height: 38,
+    borderRadius: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 14,
+  },
+  prefTextCol: {
+    flex: 1,
+  },
+  prefTitle: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: '#0F172A',
+  },
+  prefSubtitle: {
+    fontSize: 12,
+    color: '#64748B',
+    marginTop: 1,
   },
   profileCard: {
     backgroundColor: '#FFFFFF',

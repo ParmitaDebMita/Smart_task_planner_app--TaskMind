@@ -1,96 +1,45 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import React from 'react';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import colors from '../../theme/colors';
 import typography from '../../theme/typography';
 import { spacing, rounded } from '../../theme/spacing';
 import { useTaskContext } from '../../context/TaskContext';
-import AppLogo from '../../components/common/AppLogo';
-import Icon from '../../components/common/Icon';
-
-const onboardingSlides = [
-  {
-    icon: 'auto_awesome',
-    iconColor: colors.secondaryContainer,
-    title: 'Gemini AI Smart Prioritization',
-    description: 'Never wonder what assignment to tackle first. TaskMind calculates urgency based on deadlines, course weights, and your energy.',
-  },
-  {
-    icon: 'calendar_month',
-    iconColor: colors.primaryContainer,
-    title: 'Zero Conflict Timetable',
-    description: 'Auto-syncs with Google Calendar and Canvas LMS so you never double-book labs, lectures, or deep study blocks.',
-  },
-  {
-    icon: 'psychology',
-    iconColor: colors.tertiary,
-    title: 'Pomodoro Focus Chamber',
-    description: 'Conquer academic tasks with guided timers, do-not-disturb protection, and immersive ambient lo-fi soundscapes.',
-  },
-];
+import TaskMindMascot from '../../components/common/TaskMindMascot';
+import BottomNav from '../../components/common/BottomNav';
 
 export const OnboardingScreen = () => {
   const { navigateTo } = useTaskContext();
-  const [activeSlide, setActiveSlide] = useState(0);
-
-  const handleNext = () => {
-    if (activeSlide < onboardingSlides.length - 1) {
-      setActiveSlide(prev => prev + 1);
-    } else {
-      navigateTo('Login');
-    }
-  };
-
-  const slide = onboardingSlides[activeSlide];
 
   return (
     <View style={styles.container}>
-      <View style={styles.headerRow}>
-        <AppLogo size={32} />
-        <TouchableOpacity onPress={() => navigateTo('HomeDashboard')}>
-          <Text style={styles.skipText}>Skip</Text>
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.contentCard}>
-        <View style={[styles.iconCircle, { backgroundColor: `${slide.iconColor}15` }]}>
-          <Icon name={slide.icon} size={48} color={slide.iconColor} fill />
-        </View>
-
-        <Text style={styles.slideTitle}>{slide.title}</Text>
-        <Text style={styles.slideDesc}>{slide.description}</Text>
-
-        <View style={styles.paginationDots}>
-          {onboardingSlides.map((_, i) => (
-            <View
-              key={i}
-              style={[
-                styles.dot,
-                i === activeSlide && styles.activeDot,
-              ]}
-            />
-          ))}
-        </View>
-      </View>
-
-      <View style={styles.actionRow}>
-        <TouchableOpacity
-          style={styles.primaryBtn}
-          onPress={handleNext}
-          activeOpacity={0.85}
-        >
-          <Text style={styles.primaryBtnText}>
-            {activeSlide === onboardingSlides.length - 1 ? 'Get Started' : 'Next'}
+      <View style={styles.content}>
+        {/* Header Title Section */}
+        <View style={styles.headerSection}>
+          <Text style={styles.welcomeText}>Welcome to</Text>
+          <Text style={styles.brandText}>TaskMind</Text>
+          <Text style={styles.subtitleText}>
+            Your AI companion for better planning, deeper focus and brighter results.
           </Text>
-          <Icon name="chevron_right" size={20} color={colors.onPrimary} />
-        </TouchableOpacity>
+        </View>
 
-        <View style={styles.loginRow}>
-          <Text style={styles.loginHint}>Already have an account? </Text>
-          <TouchableOpacity onPress={() => navigateTo('Login')}>
-            <Text style={styles.loginLink}>Sign In</Text>
+        {/* Mascot Hero Section */}
+        <View style={styles.mascotSection}>
+          <TaskMindMascot size={220} showBackground={true} variant="studying" />
+        </View>
+
+        {/* Action Button */}
+        <View style={styles.actionSection}>
+          <TouchableOpacity
+            style={styles.continueBtn}
+            onPress={() => navigateTo('ProfileSetup')}
+            activeOpacity={0.88}
+          >
+            <Text style={styles.continueBtnText}>Continue →</Text>
           </TouchableOpacity>
         </View>
       </View>
+
+      <BottomNav />
     </View>
   );
 };
@@ -98,95 +47,72 @@ export const OnboardingScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background,
+    backgroundColor: '#FFFDF9',
     justifyContent: 'space-between',
-    paddingVertical: spacing.xl,
+  },
+  content: {
+    flex: 1,
     paddingHorizontal: spacing.lg,
-  },
-  headerRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    paddingTop: spacing.xl,
+    paddingBottom: spacing.md,
     justifyContent: 'space-between',
-    paddingTop: spacing.md,
-  },
-  skipText: {
-    ...typography.labelMd,
-    color: colors.onSurfaceVariant,
-  },
-  contentCard: {
     alignItems: 'center',
-    backgroundColor: colors.surfaceContainerLowest,
-    borderRadius: rounded.xl,
-    padding: spacing.xl,
-    borderWidth: 1,
-    borderColor: 'rgba(229, 231, 235, 0.6)',
   },
-  iconCircle: {
-    width: 96,
-    height: 96,
-    borderRadius: rounded.full,
+  headerSection: {
     alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: spacing.lg,
+    marginTop: spacing.md,
+    maxWidth: 320,
   },
-  slideTitle: {
+  welcomeText: {
     ...typography.headlineMd,
-    color: colors.onSurface,
-    textAlign: 'center',
-    marginBottom: spacing.sm,
-  },
-  slideDesc: {
-    ...typography.bodyMd,
-    color: colors.onSurfaceVariant,
-    textAlign: 'center',
-    lineHeight: 22,
-    maxWidth: 290,
-  },
-  paginationDots: {
-    flexDirection: 'row',
-    gap: 8,
-    marginTop: spacing.xl,
-  },
-  dot: {
-    width: 8,
-    height: 8,
-    borderRadius: rounded.full,
-    backgroundColor: colors.surfaceContainerHighest,
-  },
-  activeDot: {
-    width: 24,
-    backgroundColor: colors.primaryContainer,
-  },
-  actionRow: {
-    gap: spacing.md,
-    paddingBottom: spacing.sm,
-  },
-  primaryBtn: {
-    height: 48,
-    backgroundColor: colors.primaryContainer,
-    borderRadius: rounded.xl,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: spacing.xs,
-  },
-  primaryBtnText: {
-    ...typography.labelLg,
-    color: colors.onPrimary,
+    fontSize: 26,
+    lineHeight: 32,
     fontWeight: '700',
+    color: '#1E293B',
   },
-  loginRow: {
-    flexDirection: 'row',
-    justifyContent: 'center',
+  brandText: {
+    ...typography.headlineXl,
+    fontSize: 38,
+    lineHeight: 44,
+    fontWeight: '800',
+    color: colors.primaryCoral,
+    marginTop: 2,
+  },
+  subtitleText: {
+    ...typography.bodyMd,
+    fontSize: 14,
+    lineHeight: 20,
+    color: '#64748B',
+    textAlign: 'center',
+    marginTop: spacing.sm,
+  },
+  mascotSection: {
+    flex: 1,
     alignItems: 'center',
+    justifyContent: 'center',
   },
-  loginHint: {
-    ...typography.bodySm,
-    color: colors.onSurfaceVariant,
+  actionSection: {
+    width: '100%',
+    maxWidth: 340,
+    marginBottom: spacing.md,
   },
-  loginLink: {
-    ...typography.labelMd,
-    color: colors.primaryContainer,
+  continueBtn: {
+    width: '100%',
+    height: 52,
+    backgroundColor: colors.primaryCoral,
+    borderRadius: rounded.full,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: colors.primaryCoral,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 10,
+    elevation: 4,
+  },
+  continueBtnText: {
+    ...typography.labelLg,
+    color: '#FFFFFF',
+    fontSize: 16,
     fontWeight: '700',
   },
 });

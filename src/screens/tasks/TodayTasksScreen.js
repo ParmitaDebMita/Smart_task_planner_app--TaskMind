@@ -1,76 +1,100 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+  Platform,
+} from 'react-native';
 import colors from '../../theme/colors';
 import typography from '../../theme/typography';
-import { spacing, rounded } from '../../theme/spacing';
+import { spacing, rounded, shadows } from '../../theme/spacing';
 import { useTaskContext } from '../../context/TaskContext';
-import Header from '../../components/common/Header';
 import BottomNav from '../../components/common/BottomNav';
 import TaskCard from '../../components/common/TaskCard';
 import Icon from '../../components/common/Icon';
 
 export const TodayTasksScreen = () => {
   const { tasks, navigateTo } = useTaskContext();
-  const [filter, setFilter] = useState('all');
+  const [activeTab, setActiveTab] = useState('Today'); // 'Today' | 'Upcoming' | 'Overdue'
 
-  const todayTasks = tasks.filter(t => {
-    if (filter === 'pending') return !t.isCompleted;
-    if (filter === 'completed') return t.isCompleted;
-    return true;
+  const filteredTasks = tasks.filter(t => {
+    if (activeTab === 'Overdue') return t.isOverdue;
+    if (activeTab === 'Upcoming') return !t.isCompleted && !t.isOverdue;
+    return true; // 'Today'
   });
 
   return (
     <View style={styles.screenWrapper}>
-      <Header title="Today's Schedule" subtitle="Wednesday, Oct 23" showBack />
-
-      <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-        {/* Filter Pills */}
-        <View style={styles.filterRow}>
+      <ScrollView
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+      >
+        {/* Header with Title & Filter Icon */}
+        <View style={styles.headerRow}>
+          <Text style={styles.headerTitle}>Tasks</Text>
           <TouchableOpacity
-            style={[styles.filterPill, filter === 'all' && styles.filterPillActive]}
-            onPress={() => setFilter('all')}
+            style={styles.filterIconBtn}
+            onPress={() => navigateTo('SearchFilters')}
+            activeOpacity={0.8}
           >
-            <Text style={[styles.filterText, filter === 'all' && styles.filterTextActive]}>
-              All Tasks ({tasks.length})
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[styles.filterPill, filter === 'pending' && styles.filterPillActive]}
-            onPress={() => setFilter('pending')}
-          >
-            <Text style={[styles.filterText, filter === 'pending' && styles.filterTextActive]}>
-              Pending ({tasks.filter(t => !t.isCompleted).length})
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[styles.filterPill, filter === 'completed' && styles.filterPillActive]}
-            onPress={() => setFilter('completed')}
-          >
-            <Text style={[styles.filterText, filter === 'completed' && styles.filterTextActive]}>
-              Completed ({tasks.filter(t => t.isCompleted).length})
-            </Text>
+            <Icon name="tune" size={20} color="#1E293B" />
           </TouchableOpacity>
         </View>
 
-        {/* Tasks List */}
+        {/* 3 Segmented Tabs: Today | Upcoming | Overdue */}
+        <View style={styles.tabsRow}>
+          {['Today', 'Upcoming', 'Overdue'].map((tab) => {
+            const isSelected = activeTab === tab;
+            return (
+              <TouchableOpacity
+                key={tab}
+                style={[
+                  styles.tabPill,
+                  isSelected && styles.tabPillActive,
+                ]}
+                onPress={() => setActiveTab(tab)}
+                activeOpacity={0.8}
+              >
+                <Text
+                  style={[
+                    styles.tabText,
+                    isSelected && styles.tabTextActive,
+                  ]}
+                >
+                  {tab}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
+        </View>
+
+        {/* Tasks Cards List */}
         <View style={styles.tasksList}>
-          {todayTasks.map(task => (
-            <TaskCard key={task.id} task={task} />
-          ))}
+          {filteredTasks.length > 0 ? (
+            filteredTasks.map((task) => (
+              <TaskCard key={task.id} task={task} />
+            ))
+          ) : (
+            <View style={styles.emptyState}>
+              <Icon name="task_alt" size={40} color="#CBD5E1" />
+              <Text style={styles.emptyStateTitle}>No {activeTab.toLowerCase()} tasks</Text>
+              <Text style={styles.emptyStateSub}>All caught up for this section!</Text>
+            </View>
+          )}
         </View>
-
-        {/* Floating Quick Action */}
-        <TouchableOpacity
-          style={styles.addBtn}
-          onPress={() => navigateTo('AddTask')}
-          activeOpacity={0.88}
-        >
-          <Icon name="add_task" size={20} color={colors.onPrimary} />
-          <Text style={styles.addBtnText}>+ Add Task for Today</Text>
-        </TouchableOpacity>
       </ScrollView>
+
+      {/* Floating Action Button: + Add Task */}
+      <TouchableOpacity
+        style={styles.fabBtn}
+        onPress={() => navigateTo('AddTask')}
+        activeOpacity={0.88}
+      >
+        <Icon name="add" size={20} color="#FFFFFF" />
+        <Text style={styles.fabBtnText}>Add Task</Text>
+      </TouchableOpacity>
 
       <BottomNav />
     </View>
@@ -80,51 +104,107 @@ export const TodayTasksScreen = () => {
 const styles = StyleSheet.create({
   screenWrapper: {
     flex: 1,
-    backgroundColor: colors.background,
+    backgroundColor: '#FFFDF9',
   },
   scrollContent: {
-    paddingHorizontal: spacing.margin,
-    paddingTop: spacing.sm,
-    paddingBottom: 96,
-    gap: spacing.md,
+    paddingHorizontal: spacing.md,
+    paddingTop: spacing.lg,
+    paddingBottom: 110,
+    maxWidth: 440,
+    width: '100%',
+    alignSelf: 'center',
   },
-  filterRow: {
+  headerRow: {
     flexDirection: 'row',
-    gap: spacing.xs,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: spacing.md,
+    paddingTop: spacing.xs,
   },
-  filterPill: {
-    paddingHorizontal: 12,
-    paddingVertical: 6,
+  headerTitle: {
+    ...typography.headlineMd,
+    fontSize: 24,
+    fontWeight: '800',
+    color: '#1E293B',
+  },
+  filterIconBtn: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: '#FFFFFF',
+    borderWidth: 1.5,
+    borderColor: '#F1EFEA',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  tabsRow: {
+    flexDirection: 'row',
+    gap: 8,
+    marginBottom: spacing.md,
+  },
+  tabPill: {
+    flex: 1,
+    height: 40,
     borderRadius: rounded.full,
-    backgroundColor: colors.surfaceContainer,
+    backgroundColor: '#FFFFFF',
+    borderWidth: 1.5,
+    borderColor: '#F1EFEA',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  filterPillActive: {
-    backgroundColor: colors.primaryContainer,
+  tabPillActive: {
+    backgroundColor: colors.primaryCoral,
+    borderColor: colors.primaryCoral,
   },
-  filterText: {
-    ...typography.labelMd,
-    color: colors.onSurface,
+  tabText: {
+    fontSize: 13,
+    fontWeight: '600',
+    color: '#64748B',
   },
-  filterTextActive: {
-    color: colors.onPrimary,
+  tabTextActive: {
+    color: '#FFFFFF',
     fontWeight: '700',
   },
   tasksList: {
-    gap: spacing.xs,
+    marginTop: 4,
   },
-  addBtn: {
-    height: 48,
-    backgroundColor: colors.primaryContainer,
-    borderRadius: rounded.xl,
+  emptyState: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: spacing.xl,
+    gap: 6,
+  },
+  emptyStateTitle: {
+    fontSize: 15,
+    fontWeight: '700',
+    color: '#64748B',
+  },
+  emptyStateSub: {
+    fontSize: 13,
+    color: '#94A3B8',
+  },
+  fabBtn: {
+    position: 'absolute',
+    bottom: 76,
+    right: 20,
+    backgroundColor: colors.primaryCoral,
+    borderRadius: rounded.full,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: spacing.xs,
-    marginTop: spacing.sm,
+    paddingHorizontal: 18,
+    paddingVertical: 12,
+    gap: 6,
+    shadowColor: colors.primaryCoral,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.35,
+    shadowRadius: 10,
+    elevation: 6,
+    zIndex: 40,
   },
-  addBtnText: {
-    ...typography.labelLg,
-    color: colors.onPrimary,
+  fabBtnText: {
+    color: '#FFFFFF',
+    fontSize: 14,
     fontWeight: '700',
   },
 });

@@ -57,6 +57,95 @@ export default function SettingsScreen() {
           </TouchableOpacity>
         </View>
 
+        {/* Quick Settings Directory matching Screen 12 */}
+        <View style={styles.card}>
+          <TouchableOpacity style={styles.navRow} onPress={() => navigateTo('Notifications')}>
+            <Icon name="notifications" size={20} color="#FF5B37" />
+            <View style={styles.navRowCol}>
+              <Text style={styles.navRowTitle}>Notifications</Text>
+              <Text style={styles.navRowSubtitle}>Tasks • Deadlines • Exams</Text>
+            </View>
+            <Icon name="chevron_right" size={20} color="#94A3B8" />
+          </TouchableOpacity>
+
+          <View style={styles.divider} />
+
+          <TouchableOpacity style={styles.navRow} onPress={() => showToast('Daily study alarm: 8:00 AM', 'info')}>
+            <Icon name="alarm" size={20} color="#F59E0B" />
+            <View style={styles.navRowCol}>
+              <Text style={styles.navRowTitle}>Alarm</Text>
+              <Text style={styles.navRowSubtitle}>Daily study alarm</Text>
+            </View>
+            <Icon name="chevron_right" size={20} color="#94A3B8" />
+          </TouchableOpacity>
+
+          <View style={styles.divider} />
+
+          <TouchableOpacity style={styles.navRow} onPress={() => navigateTo('DeepStudyMode')}>
+            <Icon name="psychology" size={20} color="#4F46E5" />
+            <View style={styles.navRowCol}>
+              <Text style={styles.navRowTitle}>Deep Study</Text>
+              <Text style={styles.navRowSubtitle}>DND & Focus mode</Text>
+            </View>
+            <Icon name="chevron_right" size={20} color="#94A3B8" />
+          </TouchableOpacity>
+
+          <View style={styles.divider} />
+
+          <TouchableOpacity style={styles.navRow} onPress={() => navigateTo('AICompanionChat')}>
+            <Icon name="smart_toy" size={20} color="#8B5CF6" />
+            <View style={styles.navRowCol}>
+              <Text style={styles.navRowTitle}>AI Companion</Text>
+              <Text style={styles.navRowSubtitle}>Chat & suggestions</Text>
+            </View>
+            <Icon name="chevron_right" size={20} color="#94A3B8" />
+          </TouchableOpacity>
+
+          <View style={styles.divider} />
+
+          <TouchableOpacity style={styles.navRow} onPress={() => navigateTo('ConnectPortal')}>
+            <Icon name="school" size={20} color="#10B981" />
+            <View style={styles.navRowCol}>
+              <Text style={styles.navRowTitle}>Portal</Text>
+              <Text style={styles.navRowSubtitle}>Updates & sync</Text>
+            </View>
+            <Icon name="chevron_right" size={20} color="#94A3B8" />
+          </TouchableOpacity>
+
+          <View style={styles.divider} />
+
+          <TouchableOpacity style={styles.navRow} onPress={() => navigateTo('Personalization')}>
+            <Icon name="palette" size={20} color="#3B82F6" />
+            <View style={styles.navRowCol}>
+              <Text style={styles.navRowTitle}>Appearance</Text>
+              <Text style={styles.navRowSubtitle}>Theme & display</Text>
+            </View>
+            <Icon name="chevron_right" size={20} color="#94A3B8" />
+          </TouchableOpacity>
+
+          <View style={styles.divider} />
+
+          <TouchableOpacity style={styles.navRow} onPress={() => showToast('Accessibility preferences configured below', 'info')}>
+            <Icon name="accessibility" size={20} color="#64748B" />
+            <View style={styles.navRowCol}>
+              <Text style={styles.navRowTitle}>Accessibility</Text>
+              <Text style={styles.navRowSubtitle}>Text size & motion</Text>
+            </View>
+            <Icon name="chevron_right" size={20} color="#94A3B8" />
+          </TouchableOpacity>
+
+          <View style={styles.divider} />
+
+          <TouchableOpacity style={styles.navRow} onPress={() => showToast('Privacy & Security details configured below', 'info')}>
+            <Icon name="security" size={20} color="#EF4444" />
+            <View style={styles.navRowCol}>
+              <Text style={styles.navRowTitle}>Privacy & Security</Text>
+              <Text style={styles.navRowSubtitle}>Data & permissions</Text>
+            </View>
+            <Icon name="chevron_right" size={20} color="#94A3B8" />
+          </TouchableOpacity>
+        </View>
+
         {/* AI & Automation Settings */}
         <Text style={styles.sectionTitle}>Gemini AI Optimization</Text>
         <View style={styles.card}>
@@ -182,6 +271,168 @@ export default function SettingsScreen() {
           </View>
         </View>
 
+        {/* Learning Portal */}
+        <Text style={styles.sectionTitle}>Learning Portal</Text>
+        <View style={styles.card}>
+          <TouchableOpacity
+            style={styles.navRow}
+            onPress={() => navigateTo('ConnectPortal')}
+          >
+            <Icon name="school" size={20} color="#10B981" />
+            <View style={styles.navRowCol}>
+              <Text style={styles.navRowTitle}>Learning Portal (PULMS)</Text>
+              <Text style={styles.navRowSubtitle}>Manage portal connection & sync</Text>
+            </View>
+            <Icon name="chevron_right" size={20} color="#94A3B8" />
+          </TouchableOpacity>
+        </View>
+
+        {/* Appearance & Personalization */}
+        <Text style={styles.sectionTitle}>Appearance</Text>
+        <View style={styles.card}>
+          <TouchableOpacity
+            style={styles.navRow}
+            onPress={() => navigateTo('Personalization')}
+          >
+            <Icon name="palette" size={20} color="#8B5CF6" />
+            <View style={styles.navRowCol}>
+              <Text style={styles.navRowTitle}>Personalization</Text>
+              <Text style={styles.navRowSubtitle}>Theme, mascot, motivation style, text size</Text>
+            </View>
+            <Icon name="chevron_right" size={20} color="#94A3B8" />
+          </TouchableOpacity>
+        </View>
+
+        {/* Accessibility */}
+        <Text style={styles.sectionTitle}>Accessibility</Text>
+        <View style={styles.card}>
+          <View style={styles.settingRow}>
+            <View style={styles.settingInfo}>
+              <Text style={styles.settingTitle}>Text Scaling</Text>
+              <Text style={styles.settingDesc}>Increase text size across the app for readability.</Text>
+            </View>
+            <TouchableOpacity
+              style={styles.editProfileBtn}
+              onPress={() => showToast('Text scaling: Default', 'info')}
+            >
+              <Text style={styles.editProfileText}>Default</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.divider} />
+
+          <View style={styles.settingRow}>
+            <View style={styles.settingInfo}>
+              <Text style={styles.settingTitle}>High Contrast</Text>
+              <Text style={styles.settingDesc}>Enhance visual contrast for better readability.</Text>
+            </View>
+            <Switch
+              value={false}
+              onValueChange={() => showToast('High contrast toggled', 'info')}
+              trackColor={{ false: '#CBD5E1', true: '#C7D2FE' }}
+              thumbColor={'#94A3B8'}
+            />
+          </View>
+
+          <View style={styles.divider} />
+
+          <View style={styles.settingRow}>
+            <View style={styles.settingInfo}>
+              <Text style={styles.settingTitle}>Reduced Animations</Text>
+              <Text style={styles.settingDesc}>Minimize motion effects for accessibility.</Text>
+            </View>
+            <Switch
+              value={false}
+              onValueChange={() => showToast('Reduced animations toggled', 'info')}
+              trackColor={{ false: '#CBD5E1', true: '#C7D2FE' }}
+              thumbColor={'#94A3B8'}
+            />
+          </View>
+
+          <View style={styles.divider} />
+
+          <View style={styles.settingRow}>
+            <View style={styles.settingInfo}>
+              <Text style={styles.settingTitle}>Screen Reader Support</Text>
+              <Text style={styles.settingDesc}>Optimized labels for assistive technologies.</Text>
+            </View>
+            <Switch
+              value={true}
+              onValueChange={() => showToast('Screen reader support toggled', 'info')}
+              trackColor={{ false: '#CBD5E1', true: '#C7D2FE' }}
+              thumbColor={'#4F46E5'}
+            />
+          </View>
+
+          <View style={styles.divider} />
+
+          <TouchableOpacity
+            style={styles.navRow}
+            onPress={() => showToast('Voice options: System default', 'info')}
+          >
+            <Icon name="record_voice_over" size={20} color="#64748B" />
+            <Text style={styles.navRowText}>Voice & Reading Options</Text>
+            <Icon name="chevron_right" size={20} color="#94A3B8" />
+          </TouchableOpacity>
+
+          <View style={styles.divider} />
+
+          <TouchableOpacity
+            style={styles.navRow}
+            onPress={() => showToast('Notification intensity: Normal', 'info')}
+          >
+            <Icon name="notifications_active" size={20} color="#64748B" />
+            <Text style={styles.navRowText}>Notification Intensity</Text>
+            <Icon name="chevron_right" size={20} color="#94A3B8" />
+          </TouchableOpacity>
+        </View>
+
+        {/* Privacy */}
+        <Text style={styles.sectionTitle}>Privacy & Security</Text>
+        <View style={styles.card}>
+          <View style={styles.settingRow}>
+            <View style={styles.settingInfo}>
+              <Text style={styles.settingTitle}>🔒 Data Protection</Text>
+              <Text style={styles.settingDesc}>Your academic data is encrypted and stored securely on-device. TaskMind never shares your data with third parties.</Text>
+            </View>
+          </View>
+
+          <View style={styles.divider} />
+
+          <TouchableOpacity
+            style={styles.navRow}
+            onPress={() => showToast('Permissions reviewed — all secure', 'success')}
+          >
+            <Icon name="admin_panel_settings" size={20} color="#4F46E5" />
+            <View style={styles.navRowCol}>
+              <Text style={styles.navRowTitle}>Permission Management</Text>
+              <Text style={styles.navRowSubtitle}>Camera, notifications, storage access</Text>
+            </View>
+            <Icon name="chevron_right" size={20} color="#94A3B8" />
+          </TouchableOpacity>
+
+          <View style={styles.divider} />
+
+          <View style={styles.settingRow}>
+            <View style={styles.settingInfo}>
+              <Text style={styles.settingTitle}>Portal Credentials</Text>
+              <Text style={styles.settingDesc}>Portal passwords are not stored by TaskMind. Authentication is session-based only.</Text>
+            </View>
+            <Icon name="verified_user" size={20} color="#10B981" />
+          </View>
+
+          <View style={styles.divider} />
+
+          <TouchableOpacity
+            style={styles.navRow}
+            onPress={() => showToast('All local data cleared', 'info')}
+          >
+            <Icon name="delete_sweep" size={20} color="#EF4444" />
+            <Text style={[styles.navRowText, { color: '#EF4444' }]}>Delete All My Data</Text>
+            <Icon name="chevron_right" size={20} color="#EF4444" />
+          </TouchableOpacity>
+        </View>
+
         {/* Account Actions */}
         <Text style={styles.sectionTitle}>Account</Text>
         <View style={styles.card}>
@@ -200,7 +451,7 @@ export default function SettingsScreen() {
 
           <TouchableOpacity
             style={styles.navRow}
-            onPress={() => navigateTo('forgotPassword')}
+            onPress={() => navigateTo('ForgotPassword')}
           >
             <Icon name="lock_reset" size={20} color="#64748B" />
             <Text style={styles.navRowText}>Reset Password</Text>

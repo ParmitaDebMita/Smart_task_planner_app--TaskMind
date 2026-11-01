@@ -11,10 +11,25 @@ import {
 
 const TaskContext = createContext();
 
+const getInitialScreen = () => {
+  if (typeof window !== 'undefined' && window.location) {
+    if (window.location.hash) {
+      const h = window.location.hash.replace('#', '').trim();
+      if (h) return h;
+    }
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const s = params.get('screen');
+      if (s) return s;
+    } catch (e) {}
+  }
+  return 'Splash';
+};
+
 export const TaskProvider = ({ children }) => {
   // Navigation & View State — screen keys use PascalCase matching App.js switch cases
-  const [currentScreen, setCurrentScreen] = useState('Splash');
-  const [navigationHistory, setNavigationHistory] = useState(['Splash']);
+  const [currentScreen, setCurrentScreen] = useState(getInitialScreen);
+  const [navigationHistory, setNavigationHistory] = useState([getInitialScreen()]);
   const [selectedTaskId, setSelectedTaskId] = useState('task-1');
 
   // User State
@@ -161,7 +176,27 @@ export const TaskProvider = ({ children }) => {
     }
     setNavigationHistory(prev => [...prev, screenName]);
     setCurrentScreen(screenName);
+    if (typeof window !== 'undefined' && window.location) {
+      window.location.hash = screenName;
+    }
   };
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.navigateTo = navigateTo;
+      const handleHashChange = () => {
+        const hash = window.location.hash.replace('#', '');
+        if (hash) {
+          setCurrentScreen(hash);
+        }
+      };
+      if (window.location.hash) {
+        handleHashChange();
+      }
+      window.addEventListener('hashchange', handleHashChange);
+      return () => window.removeEventListener('hashchange', handleHashChange);
+    }
+  }, []);
 
   const goBack = () => {
     if (navigationHistory.length > 1) {
